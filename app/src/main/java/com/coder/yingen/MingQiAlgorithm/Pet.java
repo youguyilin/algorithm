@@ -1,5 +1,7 @@
 package com.coder.yingen.MingQiAlgorithm;
 
+import java.util.Map;
+
 /**
  * PackageName: com.coder.yingen.MingQiAlgorithm
  * ClassName: Pet
