@@ -1,5 +1,10 @@
 package com.coder.yingen.algorithm.bst;
 
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+import java.util.prefs.NodeChangeEvent;
+
 /**
  * PackageName: com.coder.yingen.algorithm.bst
  * ClassName: BinaryBST
@@ -258,5 +263,65 @@ public class BinaryBST {
         }
         return currentParent.val;
     }
+
+    /**
+     * 借助栈实现前序遍历
+     */
+    public void preTraByStack(BSTNode node){
+        Stack<BSTNode> mBSTNodeStack = new Stack<>();
+        while (node !=null || !mBSTNodeStack.empty()){
+            while (node!=null){
+                System.out.println(node.val);
+                mBSTNodeStack.push(node);
+                node = node.leftChild;
+            }
+            if (!mBSTNodeStack.empty()){
+                node = mBSTNodeStack.pop();
+                node = node.rightChild;
+            }
+        }
+    }
+
+    /**
+     * 中序非递归遍历
+     * @param node
+     */
+    public void midTraByStack(BSTNode node){
+        Stack<BSTNode> mBSTNodeStack = new Stack<>();
+        while (node != null || ! mBSTNodeStack.empty()){
+            while (node !=null){
+                mBSTNodeStack.push(node);
+                node = node.leftChild;
+            }
+            if (!mBSTNodeStack.empty()){
+                node = mBSTNodeStack.pop();
+                System.out.println(node.val);
+                node = node.rightChild;
+            }
+        }
+    }
+
+    /**
+     * 层次遍历
+     * @param node
+     */
+    public void leverTraByLinkQueue(BSTNode node){
+        if (node == null) return;
+        BSTNode curNode;
+        Queue<BSTNode> mBSTNodeQueue = new LinkedList<>();
+        while (mBSTNodeQueue.size() != 0){
+            curNode = mBSTNodeQueue.poll();
+            System.out.println(curNode.val);
+
+            if (curNode.leftChild !=null){
+                mBSTNodeQueue.offer(curNode.leftChild);
+            }
+            if (curNode.rightChild !=null){
+                mBSTNodeQueue.offer(curNode.rightChild);
+            }
+        }
+    }
+
+
 
 }
