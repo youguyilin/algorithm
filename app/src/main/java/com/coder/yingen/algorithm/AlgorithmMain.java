@@ -9,7 +9,11 @@ package com.coder.yingen.algorithm;
  */
 public class AlgorithmMain {
     public static void main(String args[]){
-//        int[] arr = {4,1,7,6,9,2,8,0,3,5};
+        int[] arr = {4,1,7,6,9,2,8,0,3,5};
+        InsertSort.insertSort(arr,10);
+        for (int a:arr){
+            System.out.print(a+ " ");
+        }
 //        algorithm algorithm = new algorithm();
 //        algorithm.QuickSortNotR(arr,0,arr.length -1);
 //        for(int i = 0; i < arr.length;i++){
