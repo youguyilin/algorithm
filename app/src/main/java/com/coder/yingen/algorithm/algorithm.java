@@ -14,6 +14,14 @@ public class algorithm {
     public algorithm() {
     }
 
+    public static void main(String[] args) {
+        int[] arr = new int[]{1,3,5,6,9,0,8,7};
+        sortASC(arr,0, arr.length -1);
+        for (int i : arr) {
+            System.out.println(i);
+        }
+    }
+
 
     /**
      * 冒泡排序：比较两个相邻的元素，将较大或者较小的值交换至右端。
@@ -38,7 +46,7 @@ public class algorithm {
         return arr;
     }
 
-    public void swap(int[] arr, int start, int end) {
+    public static void swap(int[] arr, int start, int end) {
         int temp = arr[start];
         arr[start] = arr[end];
         arr[end] = temp;
@@ -51,27 +59,26 @@ public class algorithm {
      * <p>
      * 时间复杂度 具有最好的平均性能，最坏时间复杂度和冒泡排序一样O（n2）;
      **/
-    public void sortASC(int[] arr, int low, int heigh) {
-        if (arr == null || arr.length == 0 || low <= 0 || heigh > arr.length - 1) {
+    public static void sortASC(int[] arr, int low, int heigh) {
+        if (arr == null || arr.length == 0 || low < 0 || heigh > arr.length - 1) {
             return;
         }
         int start = low;
         int end = heigh;
         int standardVal = arr[start];
         while (end > start) {
-            while (end > start && arr[end] > standardVal) {
+            while (end > start && arr[end] >= standardVal) {
                 end--;
             }
-            if (arr[end] < standardVal) {
-                swap(arr, end, start);
-            }
-            while (end > start && arr[start] < standardVal) {
+            while (end > start && arr[start] <= standardVal) {
                 start++;
             }
-            if (arr[start] > standardVal) {
+            if (end > start) {
                 swap(arr, end, start);
             }
         }
+
+        swap(arr,low,start);
 
         //采用递归的形式完成
         //只要头部移动，就说明还有数据发生排序，未完成排序
@@ -92,7 +99,7 @@ public class algorithm {
      * @param right
      * @return
      */
-    public int[] leftAndRightindicator(int[] arr, int left, int right) {
+    public int leftAndRightindicator(int[] arr, int left, int right) {
         int key = getMid(arr, left, right);
         while (left < right) {
             while (left < right && arr[left] <= arr[key]) {
@@ -104,7 +111,7 @@ public class algorithm {
             swap(arr, left, right);
         }
         swap(arr, left, key);
-        return arr;
+        return left;
 
     }
 
@@ -158,7 +165,7 @@ public class algorithm {
 
     /**
      * 非递归排序
-     *
+     * 利用栈保存左右存储空间
      * @param arr
      * @param left
      * @param right
@@ -363,7 +370,7 @@ public class algorithm {
         ListNode slow = head;
         ListNode fast = head;
         while (fast != null && fast.getNext() != null) {
-            slow = head.getNext();
+            slow = slow.getNext();
             fast = fast.getNext().getNext();
             if (slow == fast) {
                 ListNode cur = head;
