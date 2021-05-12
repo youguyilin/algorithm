@@ -15,11 +15,14 @@ public class algorithm {
     }
 
     public static void main(String[] args) {
-        int[] arr = new int[]{1,3,5,6,9,0,8,7};
-        sortASC(arr,0, arr.length -1);
+        int[] arr = new int[]{1, 3, 5, 6, 9, 0, 8, 7};
+        sortASC(arr, 0, arr.length - 1);
         for (int i : arr) {
             System.out.println(i);
         }
+
+        String str = longestCommonSubSequence("acbcbce", "abcbced");
+        System.out.println(str + "----");
     }
 
 
@@ -58,6 +61,7 @@ public class algorithm {
      * 但是这个不是一种稳定的算法，多个相同的值的相对位置会在算法结束的时候发生变动
      * <p>
      * 时间复杂度 具有最好的平均性能，最坏时间复杂度和冒泡排序一样O（n2）;
+     * 平均调用栈高度为O(logn),最差高度为O（n）,不管那种每一层的处理时间都是O（n）
      **/
     public static void sortASC(int[] arr, int low, int heigh) {
         if (arr == null || arr.length == 0 || low < 0 || heigh > arr.length - 1) {
@@ -78,7 +82,7 @@ public class algorithm {
             }
         }
 
-        swap(arr,low,start);
+        swap(arr, low, start);
 
         //采用递归的形式完成
         //只要头部移动，就说明还有数据发生排序，未完成排序
@@ -166,6 +170,7 @@ public class algorithm {
     /**
      * 非递归排序
      * 利用栈保存左右存储空间
+     *
      * @param arr
      * @param left
      * @param right
@@ -243,6 +248,7 @@ public class algorithm {
         if (a == null) {
             return false;
         }
+
 
         int rows = a.length;
         int columns = a[0].length;
@@ -383,6 +389,34 @@ public class algorithm {
         }
         return null;
     }
+
+    /*******************************************************最长公共子序列问题**************************************************************/
+    public static String longestCommonSubSequence(String text1, String text2) {
+        int M = text1.length();
+        int N = text2.length();
+        int maxLen = 0, maxEnd = 0;
+        int[][] dp = new int[M][N];
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j < N; j++) {
+                if (text1.charAt(i) == text2.charAt(j)) {
+                    if (i == 0 || j == 0) {
+                        dp[i][j] = 1;
+                    } else {
+                        dp[i][j] = dp[i - 1][j - 1] + 1;
+                    }
+                } else {
+                    dp[i][j] = 0;
+                }
+
+                if (dp[i][j] > maxLen) {
+                    maxLen = dp[i][j];
+                    maxEnd = i;
+                }
+            }
+        }
+        return text1.substring(maxEnd - maxLen +1, maxEnd +1);
+    }
+
 
 }
 

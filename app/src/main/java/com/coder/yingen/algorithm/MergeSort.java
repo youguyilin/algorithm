@@ -22,6 +22,16 @@ public class MergeSort {
         }
     }
 
+    /**
+     * 合并的时间复杂度为n，
+     * 分治二叉树的深度为log2n
+     * 总的平均时间复杂度为nlogn
+     * 空间复杂度就是在 临时的数组和递归时压入栈的数据占用的空间 n + logn, 空间复杂度为O(n)
+     *
+     * 典型的用空间换取时间的算法
+     *
+     * @param arr
+     */
     public static void mergeSort(int[] arr) {
         sortArr(arr, 0, arr.length - 1);
     }
