@@ -10,20 +10,20 @@ package com.coder.yingen.algorithm;
  */
 public class InsertSort {
 
-    public static void insertSort(int[] a,int n){
-        int i,j,k;
-        for (i=1;i < n ;i++){
-            for (j = i-1;j>=0;j--){
+    public static void insertSort(int[] a, int n) {
+        int i, j, k;
+        for (i = 1; i < n; i++) {
+            for (j = i - 1; j >= 0; j--) {
                 if (a[j] < a[i]) break;
             }
 
 
-            if (j != i-1){
+            if (j != i - 1) {
                 int temp = a[i];
-                for (k = i-1;k>j;k--){
-                    a[k+1]  = a[k];
+                for (k = i - 1; k > j; k--) {
+                    a[k + 1] = a[k];
                 }
-                a[k +1] = temp;
+                a[k + 1] = temp;
             }
         }
     }
