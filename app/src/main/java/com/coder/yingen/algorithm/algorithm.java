@@ -21,7 +21,7 @@ public class algorithm {
             System.out.println(i);
         }
 
-        String str = longestCommonSubSequence("acbcbce", "abcbced");
+        String str = longestPalindrome("aacabdkacaa");
         System.out.println(str + "----");
     }
 
@@ -414,9 +414,42 @@ public class algorithm {
                 }
             }
         }
-        return text1.substring(maxEnd - maxLen +1, maxEnd +1);
+        return text1.substring(maxEnd - maxLen + 1, maxEnd + 1);
     }
 
+    /*******************************************************最长公共子序列问题（回文问题）**************************************************************/
+    public static String longestPalindrome(String s) {
+        if (s.equals("")) {
+            return "";
+        }
+        String origin = s;
+        String reverse = new StringBuffer(s).reverse().toString();
+        int length = s.length();
+        int[] arr = new int[length];
+        int maxLen = 0;
+        int maxEnd = 0;
+        for (int i = 0; i < length; i++) {
+            for (int j = length -1; j  >= 0; j--) {
+                if (origin.charAt(i) == reverse.charAt(j)) {
+                    if (i == 0 || j == 0) {
+                        arr[j] = 1;
+                    } else {
+                        arr[j] = arr[j - 1] + 1;
+                    }
+                } else {
+                    arr[j] = 0;
+                }
+                if (arr[j] > maxLen) {
+                    int beforeRev = length - 1- j;
+                    if (arr[j] -1 + beforeRev == i) {
+                        maxLen = arr[j];
+                        maxEnd = i;
+                    }
+                }
+            }
+        }
+        return s.substring(maxEnd - maxLen + 1, maxEnd + 1);
+    }
 
 }
 
