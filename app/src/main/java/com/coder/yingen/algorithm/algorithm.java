@@ -429,7 +429,7 @@ public class algorithm {
         int maxLen = 0;
         int maxEnd = 0;
         for (int i = 0; i < length; i++) {
-            for (int j = length -1; j  >= 0; j--) {
+            for (int j = length - 1; j >= 0; j--) {
                 if (origin.charAt(i) == reverse.charAt(j)) {
                     if (i == 0 || j == 0) {
                         arr[j] = 1;
@@ -440,8 +440,8 @@ public class algorithm {
                     arr[j] = 0;
                 }
                 if (arr[j] > maxLen) {
-                    int beforeRev = length - 1- j;
-                    if (arr[j] -1 + beforeRev == i) {
+                    int beforeRev = length - 1 - j;
+                    if (arr[j] - 1 + beforeRev == i) {
                         maxLen = arr[j];
                         maxEnd = i;
                     }
@@ -449,6 +449,67 @@ public class algorithm {
             }
         }
         return s.substring(maxEnd - maxLen + 1, maxEnd + 1);
+    }
+
+    /*******************************************************合并链表**************************************************************/
+
+    /**
+     * 递归合并有序单链表
+     *
+     * @param node1
+     * @param node2
+     * @return
+     */
+    public static ListNode mergeTwoList(ListNode node1, ListNode node2) {
+        if (node1 == null && node2 == null) {
+            return null;
+        }
+        if (node1 == null) {
+            return node2;
+        }
+        if (node2 == null) {
+            return node1;
+        }
+        ListNode node = null;
+        if (node1.getValue() > node2.getValue()) {
+            //把head 较小的结点给头结点
+            node = node2;
+            node.setNext(mergeTwoList(node1, node2.getNext()));
+        } else {
+            node = node1;
+            node.setNext(mergeTwoList(node1.getNext(), node2));
+        }
+        return node;
+    }
+
+    public static ListNode mergeTwoListNode2(ListNode node1, ListNode node2) {
+        if (node1 == null || node2 == null) {
+            return node1 != null ? node1 : node2;
+        }
+        ListNode node = node1.getValue() < node2.getValue() ? node1 : node2;
+        ListNode cur1 = node1 == node ? node1 : node2;
+        ListNode cur2 = node1 == node ? node2 : node1;
+
+        ListNode pre = null; //cur1 前一个元素
+        ListNode next = null;//cur2 的后一个元素
+
+        while (cur1 != null && cur2 != null) {
+            //第一次进if里
+            if (cur1.getValue() <= cur2.getValue()) {
+                pre = cur1;
+                cur1 = cur1.getNext();
+            } else {
+                next = cur2.getNext();
+                pre.setNext(cur2);
+                cur2.setNext(cur1);
+                pre = cur2;
+                cur2 = next;
+            }
+        }
+
+        pre.setNext(cur1 == null ? cur2 : cur1);
+        return next;
+
     }
 
 }

@@ -12,6 +12,7 @@ import java.net.BindException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -342,6 +343,32 @@ public class TreeAlgorithm {
             }
         }
         Collections.reverse(result);
+        return result;
+    }
+
+    /**
+     * 层次遍历
+     * @param root
+     * @return
+     */
+    public ArrayList<Integer> levelOrderBT(BinaryTreeNode root) {
+        ArrayList<Integer> result = new ArrayList<>();
+        Deque<BinaryTreeNode> deque = new LinkedList<>();
+        if (root == null) {
+            return  result;
+        }
+        deque.add(root);
+        BinaryTreeNode currentNode = root;
+        while (!deque.isEmpty()){
+            currentNode = deque.pollFirst();
+            if (currentNode.leftNode != null) {
+                deque.addLast(currentNode.leftNode);
+            }
+            if (currentNode.rightNode != null) {
+                deque.addLast(currentNode.rightNode);
+            }
+            result.add(currentNode.value);
+        }
         return result;
     }
 

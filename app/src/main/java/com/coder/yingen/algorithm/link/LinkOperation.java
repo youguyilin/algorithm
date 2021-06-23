@@ -7,6 +7,11 @@ import org.w3c.dom.Node;
  */
 public class LinkOperation {
 
+    /**
+     * 链表翻转
+     * @param head
+     * @return
+     */
     public static ListNode reverseLink(ListNode head) {
         if (head == null || getLength(head) == 0) {
             return head;

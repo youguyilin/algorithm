@@ -28,6 +28,10 @@ public class ListNode {
         return next;
     }
 
+    public int getValue() {
+        return value;
+    }
+
     public void setNext(ListNode next) {
         this.next = next;
     }
