@@ -11,7 +11,7 @@ import java.util.Queue;
  * 生产者消费者模式，在存储端同一时刻只有一个线程读写，有5种方式可以实现
  * 1。 用 synchronized 对存储加锁，然后用object原声的wait（）和notify() 做同步
  * 2。 用concurrent.Lock,然后用condition的wait()和signal（）做同步
- * 3。直接水涌concurrent.BlockingQueue.
+ * 3。直接使用concurrent.BlockingQueue.
  * 4. 使用PipedInputStream/PipedOutputStream
  * 5. 使用信号量 semaphore
  */

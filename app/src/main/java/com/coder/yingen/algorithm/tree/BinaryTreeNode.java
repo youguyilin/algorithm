@@ -12,6 +12,15 @@ public class BinaryTreeNode {
     BinaryTreeNode leftNode;
     BinaryTreeNode rightNode;
 
+    public BinaryTreeNode() {
+    }
+
+    public BinaryTreeNode(int value, BinaryTreeNode leftNode, BinaryTreeNode rightNode) {
+        this.value = value;
+        this.leftNode = leftNode;
+        this.rightNode = rightNode;
+    }
+
     public BinaryTreeNode(int value) {
         this.value = value;
     }
