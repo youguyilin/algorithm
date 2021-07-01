@@ -1,6 +1,7 @@
 package com.coder.yingen.algorithm;
 
 import com.coder.yingen.algorithm.listnode.ListNode;
+import com.coder.yingen.algorithm.tree.ConstructTreeFromBV;
 
 import java.util.PriorityQueue;
 import java.util.Stack;
@@ -511,6 +512,29 @@ public class algorithm {
         return next;
 
     }
-
+    /*******************************************************螺旋矩阵**************************************************************/
+    /**
+     * 给你一个正整数，生成一个1到n2所有元素，且元素按顺时针顺序螺旋排列的n * n正方形矩阵matrix
+     *
+     * @param n
+     * @return
+     */
+    public static int[][] generateMatrix(int n) {
+        int l = 0, r = n - 1, t = 0, b = n - 1;
+        int[][] mat = new int[n][n];
+        int tar = n * n;
+        int num = 1;
+        while (num <= tar) {
+            for (int i = 1; i <= r; i++) mat[t][i] = num++;
+            t++;
+            for (int i = t; i <= b; i++) mat[i][r] = num++;
+            r--;
+            for (int i = r; i >= l; i--) mat[b][i] = num++;
+            b--;
+            for (int i = b; i >= t; i--) mat[i][l] = num++;
+            l++;
+        }
+        return mat;
+    }
 }
 
