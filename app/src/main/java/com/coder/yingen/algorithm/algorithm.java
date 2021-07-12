@@ -3,8 +3,12 @@ package com.coder.yingen.algorithm;
 import com.coder.yingen.algorithm.listnode.ListNode;
 import com.coder.yingen.algorithm.tree.ConstructTreeFromBV;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Stack;
+
+import javax.crypto.Cipher;
 
 /**
  * Created by chuyingen on 2018/4/13.
@@ -535,6 +539,28 @@ public class algorithm {
             l++;
         }
         return mat;
+    }
+
+    /*******************************************************Z 字形变换**************************************************************/
+    public static String ConvertStringToZ(String s, int numRows) {
+        if (numRows == 1) return s;
+        List<StringBuilder> rows = new ArrayList<>();
+        for (int i = 0; i < Math.min(numRows, s.length()); i++) {
+            rows.add(new StringBuilder());
+        }
+        int curRows = 0;
+        boolean goingDown = false;
+        for (char c : s.toCharArray()) {
+            rows.get(curRows).append(c);
+            if (curRows == 0 || curRows == numRows - 1) {
+                goingDown = !goingDown;
+            }
+            curRows += goingDown ? 1 : -1;
+        }
+
+        StringBuilder str = new StringBuilder();
+        for (StringBuilder builder: rows) str.append(builder);
+        return str.toString();
     }
 }
 

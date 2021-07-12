@@ -15,8 +15,6 @@ public class PrintLinkListFromEnd {
     /**
      * 也就是说，第一个遍历到的节点最后一个输出，而最后一个遍历到的节点第一个输出。典型的后进先出，用栈，或者递归
      */
-
-
     public static void printListInverselyUseStack(ListNode head){
         if (head == null)
             return;
