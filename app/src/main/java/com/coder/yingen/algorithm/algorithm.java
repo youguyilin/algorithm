@@ -562,5 +562,22 @@ public class algorithm {
         for (StringBuilder builder: rows) str.append(builder);
         return str.toString();
     }
+    /*******************************************************删除链表的倒数第N个节点，一次遍历**************************************************************/
+    public com.coder.yingen.algorithm.link.ListNode removeNthFromEnd(com.coder.yingen.algorithm.link.ListNode head, int n){
+        com.coder.yingen.algorithm.link.ListNode dummyHead = new com.coder.yingen.algorithm.link.ListNode(0);
+        dummyHead.next = head;
+        com.coder.yingen.algorithm.link.ListNode p = dummyHead;
+        com.coder.yingen.algorithm.link.ListNode q = dummyHead;
+        for (int i = 0; i < n +1; i++ ){
+            q = q.next;
+        }
+        while (q!= null){
+            p = p.next;
+            q= q.next;
+        }
+        com.coder.yingen.algorithm.link.ListNode deletNode = p.next;
+        p.next = deletNode.next;
+        return dummyHead.next;
+    }
 }
 
