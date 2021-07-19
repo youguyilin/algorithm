@@ -559,25 +559,51 @@ public class algorithm {
         }
 
         StringBuilder str = new StringBuilder();
-        for (StringBuilder builder: rows) str.append(builder);
+        for (StringBuilder builder : rows) str.append(builder);
         return str.toString();
     }
+
     /*******************************************************删除链表的倒数第N个节点，一次遍历**************************************************************/
-    public com.coder.yingen.algorithm.link.ListNode removeNthFromEnd(com.coder.yingen.algorithm.link.ListNode head, int n){
+    public com.coder.yingen.algorithm.link.ListNode removeNthFromEnd(com.coder.yingen.algorithm.link.ListNode head, int n) {
         com.coder.yingen.algorithm.link.ListNode dummyHead = new com.coder.yingen.algorithm.link.ListNode(0);
         dummyHead.next = head;
         com.coder.yingen.algorithm.link.ListNode p = dummyHead;
         com.coder.yingen.algorithm.link.ListNode q = dummyHead;
-        for (int i = 0; i < n +1; i++ ){
+        for (int i = 0; i < n + 1; i++) {
             q = q.next;
         }
-        while (q!= null){
+        while (q != null) {
             p = p.next;
-            q= q.next;
+            q = q.next;
         }
         com.coder.yingen.algorithm.link.ListNode deletNode = p.next;
         p.next = deletNode.next;
         return dummyHead.next;
+    }
+
+    /*******************************************************二分查找 有序数组 返回位置下标**************************************************************/
+    public int[] searchRange(int[] nums, int target) {
+        int leftIdx = binarySearchC(nums, target, true);
+        int rightIdx = binarySearchC(nums, target, false) - 1;
+        if (leftIdx <= rightIdx && rightIdx < nums.length && nums[leftIdx] == target
+                && nums[rightIdx] == target) {
+            return new int[]{leftIdx, rightIdx};
+        }
+        return new int[]{-1, -1};
+    }
+
+    private int binarySearchC(int[] nums, int target, boolean lower) {
+        int left = 0, right = nums.length - 1, ans = nums.length;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] > target || (lower && nums[mid] >= target)) {
+                right = mid - 1;
+                ans = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return ans;
     }
 }
 
