@@ -1,11 +1,16 @@
 package com.coder.yingen.algorithm;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import com.coder.yingen.algorithm.listnode.ListNode;
 import com.coder.yingen.algorithm.tree.ConstructTreeFromBV;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Stack;
 
 import javax.crypto.Cipher;
@@ -602,6 +607,74 @@ public class algorithm {
             } else {
                 left = mid + 1;
             }
+        }
+        return ans;
+    }
+
+    /*******************************************************最小的k个数**************************************************************/
+    //保持堆的大小位k，然后遍历数组中的数字，遍历的时候做如下的判断：
+    //1。 若目前堆的大小(空间)小于k，将当前数字放入堆中，
+    //2。 否则判端当前数字和大根堆堆顶元素的大小关系，如果比当前堆顶打，这个数跳过，
+    // 如果小，poll堆顶元素，再将该数字放入堆中。
+    //使用大根堆，时间复杂度是 O(NlogK)O(NlogK)
+    //使用小根堆，需要将所有的元素入堆，时间复杂堆是O(NlogN)O(NlogN)
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static int[] getLeastNumbers(int[] arr, int k) {
+        if (k == 0 || arr.length == 0)
+            return new int[0];
+        //默认是小根堆，实现大根堆，需要重写一下比较器
+        Queue<Integer> pq = new PriorityQueue<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer v1, Integer v2) {
+                return v2 - v1;
+            }
+
+        });
+        for (int num : arr) {
+            if (pq.size() < k) {
+                pq.offer(num);
+            } else if (pq.peek() > num) {
+                pq.peek();
+                pq.offer(num);
+            }
+        }
+        int[] result = new int[pq.size()];
+        int idx = 0;
+        for (int n : pq) {
+            result[idx++] = n;
+        }
+        return result;
+    }
+
+    /*******************************************************滑动窗口最大值**************************************************************/
+    //最大堆（优先队列）
+    //可以使用最大堆的数据结构来保存元素，堆顶元素即为当前堆的最大值，并判断当前堆顶元素是否在窗口中，在则直接返回，不在则删除堆顶元素并调整堆
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int n = nums.length;
+        //这里传入一个比较器，当两者值相同时，比较下标的位置，下标大的在前面
+        PriorityQueue<int[]> queue = new PriorityQueue<>(new Comparator<int[]>() {
+            @Override
+            public int compare(int[] p1, int[] p2) {
+                return p1[0] != p2[0] ? p2[0] - p1[0] : p2[1] - p1[1];
+            }
+        });
+        //初始化 前k的元素到堆中
+        for (int i = 0; i < k; i++) {
+            queue.offer(new int[]{nums[i], i});
+        }
+        int[] ans = new int[n - k + 1];
+        //将第一次答案加入数据
+        ans[0] = queue.peek()[0];
+        for (int i = k; i < n; i++) {
+            //将新元素加入优先队列
+            queue.offer(new int[]{nums[i], i});
+            //循环判断当前队列是否在窗口中，窗口左边界为i-k
+            while (queue.peek()[1] <= i - k) {
+                queue.poll();
+            }
+            //在窗口中直接赋值
+            ans[i - k + 1] = queue.peek()[0];
         }
         return ans;
     }
