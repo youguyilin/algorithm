@@ -7,6 +7,7 @@ import com.coder.yingen.algorithm.listnode.ListNode;
 import com.coder.yingen.algorithm.tree.ConstructTreeFromBV;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -678,5 +679,58 @@ public class algorithm {
         }
         return ans;
     }
+
+    /*******************************************************不同路径**************************************************************/
+    //一个机器人位于一个m * n 网格的左上角，机器人咩次只能向下或者向右移动一步，机器人试图达到网格的右下角，问总共有多少条不同的路径
+    //我们令dp[i][j]是到达i,j最多路径
+    //动态方程dp[i][j] = dp[i-1][j] + dp[i][j-1]
+    //注意：对于第一行dp[0][j],或者第一列dp[i][0],由于都是在边界，所以只能为1
+    //时间复杂度 O(m*n)O(m*n)
+    //空间复杂度 O(m*n)O(m*n)
+    //优化，因为我们每次只需要dp[i-1][j],dp[i][j]
+    public int uniquePath(int m, int n) {
+        int[][] dp = new int[m][n];
+        for (int i = 0; i < n; i++) {
+            dp[0][i] = 1;
+        }
+        for (int i = 0; i < m; i++) {
+            dp[i][0] = 1;
+        }
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+            }
+        }
+        return dp[m - 1][n - 1];
+    }
+
+    //优化 空间复杂度O(2n)
+    public int uniquePaths(int m, int n) {
+        int[] pre = new int[n];
+        int[] cur = new int[n];
+        Arrays.fill(pre, 1);
+        Arrays.fill(cur, 1);
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                cur[j] = cur[j - 1] + pre[j];
+            }
+            pre = cur.clone();
+        }
+        return pre[n - 1];
+    }
+
+    //空间复杂度O(n)
+    public int uniquePathsOpt(int m, int n) {
+        int[] cur = new int[n];
+        Arrays.fill(cur, 1);
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                cur[j] += cur[j - 1];
+            }
+        }
+        return cur[n-1];
+    }
+
+
 }
 
