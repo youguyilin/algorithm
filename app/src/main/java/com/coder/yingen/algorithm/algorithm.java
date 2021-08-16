@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
@@ -635,7 +636,7 @@ public class algorithm {
             if (pq.size() < k) {
                 pq.offer(num);
             } else if (pq.peek() > num) {
-                pq.peek();
+                pq.poll();
                 pq.offer(num);
             }
         }
