@@ -2,6 +2,8 @@ package com.coder.yingen.algorithm.tree;
 
 import android.provider.DocumentsContract;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
 
 import com.coder.yingen.algorithm.ProductAndConsumerRL;
@@ -370,6 +372,33 @@ public class TreeAlgorithm {
             result.add(currentNode.value);
         }
         return result;
+    }
+
+    /**
+     * 根据id在view树里查找view
+     * @param vg
+     * @param id
+     * @return
+     */
+    public View getViewInVG(ViewGroup vg, int id){
+        if (vg == null) return null;
+        int size = vg.getChildCount();
+        //循环遍历所有的孩子
+        for (int i =0; i < size; i++) {
+            View v = vg.getChildAt(i);
+            if (v.getId() == id) {
+                return v;
+            }
+            //如果id不同获取的是一个viewgroup，继续查找
+            if (v instanceof ViewGroup) {
+               View vi = getViewInVG((ViewGroup) v, id);
+               if (vi != null) {
+                   return vi;
+               }
+            }
+        }
+        //最后还是没找到
+        return null;
     }
 
 }
